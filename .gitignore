@@ -1,0 +1,6 @@
+node_modules/
+out/
+transcripts/
+*.tar.gz
+.env
+.DS_Store
