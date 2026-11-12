@@ -114,8 +114,20 @@ const VARIANTS: Record<string, Params> = {
     sizePriorSd0: 0.5, sizePriorSdPerHr: 0.05, sizePriorSdCap: 1.0,
     sizeGrowthPrior: 0.2, sizeGrowthCap: 0.9, sizeGrowthSatHr: 3,
     pMin: 0.002, pMax: 0.22, smoothAlpha: 0.3, useSlope: true },
+  // V11 (revision 2026-11-12): V5's slope + V8's large newcomer reserve
+  // (unBase 0.55, unAmp 0.30). The two ingredients that each won a
+  // long-horizon cell — slope won split D, large reserve won split 2 / cut 1 —
+  // combined. Probe 2026-11-12: default is v11 (was v6); FF_VARIANT still
+  // overrides it.
+  v11: { volPoolHr: 0.83, volCurveHr: 0.23, sdCap: 1.0, driftCapLo: -0.4, driftCapHi: 0.8,
+    slopeShrinkK: 8, gradRateHr: 0.06, gradCap: 0.6, jumpMean: -0.31, jumpSd: 0.55,
+    curveCapMaxSol: 500, simsPerRead: 5000, seed: 20261112,
+    unBase: 0.55, unAmp: 0.30, unTauHr: 4, sizeBlend: 0.55,
+    sizePriorSd0: 0.5, sizePriorSdPerHr: 0.05, sizePriorSdCap: 1.0,
+    sizeGrowthPrior: 0.2, sizeGrowthCap: 0.9, sizeGrowthSatHr: 3,
+    pMin: 0.002, pMax: 0.22, smoothAlpha: 0.3, useSlope: true },
 };
-const P = VARIANTS[process.env.FF_VARIANT ?? 'v6'] ?? VARIANTS.v6!;
+const P = VARIANTS[process.env.FF_VARIANT ?? 'v11'] ?? VARIANTS.v11!;
 
 // ---- deterministic PRNG (mulberry32) + Box-Muller ----
 function mulberry32(seed: number): () => number {
